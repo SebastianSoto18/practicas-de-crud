@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const app = express();
 
 
+app.use(bodyParser,json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(express.static(__dirname + '/public'));
+
 mongoose.connect('mongodb://guillermo:123@Localhost:27017/praacticasCRUD', {useNewUrlparser: true, useUnifiedTopology: true});
 
 const connection=mongoose.connection;
@@ -11,6 +16,8 @@ const connection=mongoose.connection;
 connection.once('open',()=>{
     console.log('conexion exitosa');
 });
+
+const 
 
 connection.on('error', (err)=>{
     console.log('error en la conexion a la BD:',err);
