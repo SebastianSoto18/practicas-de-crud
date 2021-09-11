@@ -39,6 +39,25 @@ app.post('/add', (req, res) =>{
     });
 });
 
+app.get('/getall', (req,res) =>{
+    Todo.find({},'text completed').then(doc =>{
+        res.json({response:'succes',data:doc});
+    }).catch(err =>{
+        console.log('error al consultar elemento', err.message);
+    });
+});
+
+app.get('/complete/:id/:status', (req,res) =>{
+    const id=req.params.id;
+    const status=req.params.status ='true'; //convertir a boolean un parametro
+
+    Todo.findByIdAndUpdate({_id:id},{$set:{completed:status}}).then(doc=>{
+            res.json({response:'succes'});
+    }).catch(err =>{
+            res.json({response:'error'});
+    })
+});
+
 app.listen(3000, () =>{
     console.log('tu puta madre');
 });
