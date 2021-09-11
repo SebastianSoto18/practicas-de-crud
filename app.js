@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 
-app.use(bodyParser,json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static(__dirname + '/public'));
@@ -17,11 +17,13 @@ connection.once('open',()=>{
     console.log('conexion exitosa');
 });
 
-const 
+
 
 connection.on('error', (err)=>{
     console.log('error en la conexion a la BD:',err);
 });
+
+const Todo =mongoose.model('Todo',{text: String, completed: Boolean});
 
 app.get('/', (req, res) =>{
     res.json({response:'success'});
