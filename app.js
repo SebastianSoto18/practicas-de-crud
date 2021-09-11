@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const { redirect } = require('statuses');
 const app = express();
 
 
@@ -25,8 +26,17 @@ connection.on('error', (err)=>{
 
 const Todo =mongoose.model('Todo',{text: String, completed: Boolean});
 
-app.get('/', (req, res) =>{
-    res.json({response:'success'});
+app.post('/add', (req, res) =>{
+    const todo=new Todo({text: req.body.text, completed: false});
+
+    todo.save()
+    .then(doc =>{
+        console.log('dato insertado', doc);
+        res.json({response: 'succes'});
+    })
+    .catch(err =>{
+        console.log('error al insertar', err.message);
+    });
 });
 
 app.listen(3000, () =>{
