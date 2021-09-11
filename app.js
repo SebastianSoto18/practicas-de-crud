@@ -58,6 +58,17 @@ app.get('/complete/:id/:status', (req,res) =>{
     })
 });
 
+app.get('/delete/:id', (req,res) =>{
+    const id=req.params.id;
+    
+
+    Todo.findByIdAndDelete({_id:id}).then(doc=>{
+            res.json({response:'succes'});
+    }).catch(err =>{
+            res.json({response:'error'});
+    })
+});
+
 app.listen(3000, () =>{
     console.log('tu puta madre');
 });
